@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { RootState } from './store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:3000/api/',
+  baseUrl: process.env.NEXT_PUBLIC_SOMETHING_API_URL,
   prepareHeaders: (headers, { getState }) => {
     // const token = (getState() as RootState).AuthFeature?.user?.token;
     const session: any = Cookies.get('userInfo');

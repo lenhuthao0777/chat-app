@@ -1,29 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Server } from '@prisma/client';
+import { Channel, ChannelType, Server } from '@prisma/client';
 
 export type ModalType =
   | 'createServer'
   | 'invite'
   | 'editServer'
-  | 'memberManage';
+  | 'memberManage'
+  | 'createChannel'
+  | 'leaveServer'
+  | 'deleteServer'
+  | 'editChannel'
+  | 'deleteChannel';
 
 export interface ModalStore {
   type: ModalType | null;
-  content:
-    | {
-        title: string;
-        description: string;
-      }
-    | {};
   isOpen: boolean;
-  data: Server | {};
+  channel?: ChannelType | null;
+  channelData?: Channel | {};
+  data?: Server | {};
 }
 
 const initialState: ModalStore = {
   type: null,
   data: {},
-  content: {},
+  channel: null,
+  channelData: {},
   isOpen: false,
 };
 
@@ -35,11 +37,15 @@ const modal: any = createSlice({
       state,
       action: PayloadAction<{
         type: ModalType;
+        channel?: ChannelType;
+        channelData?: Channel;
         data: Server;
       }>
     ) => {
       state.isOpen = true;
       state.type = action.payload.type;
+      state.channel = action.payload.channel;
+      state.channelData = action.payload.channelData;
       state.data = action.payload.data;
     },
     onClose: (state) => {

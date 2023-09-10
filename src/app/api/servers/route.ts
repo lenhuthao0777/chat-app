@@ -21,7 +21,7 @@ export const POST = async (req: Request, res: NextApiResponse) => {
         imageUrl,
         profileId: profile.id,
         inviteCode: uuid(),
-        Channel: {
+        channels: {
           create: {
             name: 'general',
             profileId: profile.id,

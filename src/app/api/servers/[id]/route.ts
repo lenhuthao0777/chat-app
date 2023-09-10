@@ -35,3 +35,33 @@ export const PUT = async (
     return new NextResponse('Internal Error', { status: 500 });
   }
 };
+
+export const DELETE = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
+  try {
+    const profile = await currentProfile();
+
+    if (!profile) {
+      return new NextResponse('Unauthorized', { status: 401 });
+    }
+
+    const res = await db.server.delete({
+      where: {
+        id: params.id,
+        profileId: profile.id,
+      },
+    });
+
+    return NextResponse.json({
+      status: 200,
+      data: res,
+      message: 'Deleted',
+    });
+  } catch (error) {
+    console.log('server id api', error);
+
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+};

@@ -16,7 +16,7 @@ const Sidebar = async () => {
 
   if (!profile) return redirect('/');
 
-  const servers: Array<Server> = await db.server.findMany({
+  const servers: Array<any> = await db.server.findMany({
     where: {
       Member: {
         some: {
@@ -24,20 +24,24 @@ const Sidebar = async () => {
         },
       },
     },
+    include: {
+      channels: true,
+    },
   });
 
   return (
-    <div className='space-y-4 flex flex-col items-center h-full w-full text-primary dark:bg-[#1e1f22] py-4 shadow'>
+    <div className='space-y-4 flex flex-col items-center h-full w-full text-primary dark:bg-[#1e1f22] bg-[#e3e5e8] py-4 shadow'>
       <DiscordButton />
       <Separator className='h-[2px] bg-zinc-300 dark:bg-zinc-700 rounded-md w-10 mx-auto' />
       <ScrollArea className='flex-1 w-full'>
         <div className='space-y-2'>
           {servers.map((server) => (
-            <div key={server.id} className=''>
+            <div key={server.id}>
               <NavItem
                 id={server.id}
                 name={server.name}
                 imageUrl={server.imageUrl}
+                channel={server?.channels}
               />
             </div>
           ))}

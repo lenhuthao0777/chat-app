@@ -1,23 +1,28 @@
 'use client';
-
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import ActionTooltip from './action-tooltip';
 import { cn } from '@/lib/utils';
 import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { Channel } from '@prisma/client';
 
 interface NavItemProps {
   id: string;
   imageUrl: string;
   name: string;
+  channel: any;
 }
-const NavItem: FC<NavItemProps> = ({ id, imageUrl, name }) => {
+const NavItem: FC<NavItemProps> = ({ id, imageUrl, name, channel }) => {
   const param = useParams();
 
   const router = useRouter();
 
+  const generalChannel = useMemo(() => {
+    return channel.find((channel: Channel) => channel.name === 'general');
+  }, [channel]);
+
   const handleServer = () => {
-    router.push(`/servers/${id}`);
+    router.push(`/servers/${id}/${generalChannel?.id}`);
   };
 
   return (

@@ -28,15 +28,15 @@ import {
 } from '../ui/dialog';
 
 type ModalProps = {
-  open: boolean;
+  open?: boolean;
   title: string;
   description: string;
   isLoading?: boolean;
   children?: React.ReactNode;
 };
 
-const InitialModal: FC<ModalProps> = ({ open = false, title, description }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(open);
+const InitialModal: FC<ModalProps> = ({ open = true, title, description }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 

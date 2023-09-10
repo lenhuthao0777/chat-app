@@ -5,6 +5,7 @@ import { Open_Sans } from 'next/font/google';
 import { ThemeProvider } from '@/providers/theme-provider';
 import ReduxQueryProvider from '@/providers/redux-query-provider';
 import ModalProvider from '@/providers/modal-provider';
+import { cn } from '@/lib/utils';
 
 const font = Open_Sans({ subsets: ['latin'] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en' suppressHydrationWarning>
-        <body className={font.className}>
+        <body
+          className={cn(font.className, 'bg-white dark:bg-[#313338]')}
+        >
           <ThemeProvider
             attribute='class'
             defaultTheme='dark'
@@ -30,7 +33,6 @@ export default function RootLayout({
           >
             <ReduxQueryProvider>
               <ModalProvider />
-
               {children}
             </ReduxQueryProvider>
           </ThemeProvider>

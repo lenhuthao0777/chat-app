@@ -6,10 +6,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { CONTENT } from '@/enums/enums';
 import { useAppDispatch } from '@/stores/app';
 import { onOpen } from '@/stores/features/Modal';
-import { ServerWithMembersWithProfiles } from '@/types/type';
 import { MemberRole, Server } from '@prisma/client';
 import {
   ChevronDown,
@@ -45,9 +43,9 @@ const ServerHeader: FC<ServerHeaderProps> = ({ server, role }) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className='focus:outline-none'>
-          <button className='w-full text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50'>
+          <button className='w-full line-clamp-1 text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50'>
             {server.name}
-            <ChevronDown className='h-5 w-5 ml-auto' />
+            <ChevronDown className='h-5 w-5 ml-auto hidden md:block' />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-1'>
@@ -90,7 +88,12 @@ const ServerHeader: FC<ServerHeaderProps> = ({ server, role }) => {
           )}
 
           {isModerator && (
-            <DropdownMenuItem className='px-3 py-2 text-sm cursor-pointer'>
+            <DropdownMenuItem
+              onClick={() =>
+                dispatch(onOpen({ type: 'createChannel', data: server }))
+              }
+              className='px-3 py-2 text-sm cursor-pointer'
+            >
               Create Channel
               <PlusCircle className='w-4 h-4 ml-auto' />
             </DropdownMenuItem>
@@ -99,14 +102,24 @@ const ServerHeader: FC<ServerHeaderProps> = ({ server, role }) => {
           {isModerator && <DropdownMenuSeparator />}
 
           {isAdmin && (
-            <DropdownMenuItem className='px-3 py-2 text-sm cursor-pointer text-rose-500'>
+            <DropdownMenuItem
+              onClick={() =>
+                dispatch(onOpen({ type: 'deleteServer', data: server }))
+              }
+              className='px-3 py-2 text-sm cursor-pointer text-rose-500'
+            >
               Delete Server
               <Trash className='w-4 h-4 ml-auto' />
             </DropdownMenuItem>
           )}
 
           {!isAdmin && (
-            <DropdownMenuItem className='px-3 py-2 text-sm cursor-pointer text-rose-500'>
+            <DropdownMenuItem
+              onClick={() =>
+                dispatch(onOpen({ type: 'leaveServer', data: server }))
+              }
+              className='px-3 py-2 text-sm cursor-pointer text-rose-500'
+            >
               Leave Server
               <LogOut className='w-4 h-4 ml-auto' />
             </DropdownMenuItem>
