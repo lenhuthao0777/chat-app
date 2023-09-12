@@ -6,7 +6,7 @@ import { Profile } from '@prisma/client';
 import { redirect } from 'next/navigation';
 
 export default async function Page() {
-  // const profile: Profile = await initialProfile();
+  const profile: Profile = await initialProfile();
 
   // const server = await db.server.findFirst({
   //   where: {

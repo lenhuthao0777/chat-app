@@ -23,7 +23,7 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {}),
 
-  messageImage: f(['image', 'pdf'])
+  messageFile: f(['image', 'pdf'])
     .middleware(async ({ req }) => {
       const user = await auth(req);
       if (!user) throw new Error('Unauthorized');

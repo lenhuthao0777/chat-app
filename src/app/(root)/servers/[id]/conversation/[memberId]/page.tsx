@@ -1,4 +1,6 @@
 import ChatHeader from '@/components/pages/channel/chat-header';
+import ChatInput from '@/components/pages/chat/chat-input';
+import ChatMessage from '@/components/pages/chat/chat-message';
 import { getOrCreateConversation } from '@/lib/conversation';
 import { currentProfile } from '@/lib/current-profile';
 import { db } from '@/lib/db';
@@ -39,12 +41,35 @@ const Page: FC<PageProps> = async ({ params: { memberId, id } }) => {
     memberOne.profileId === profile?.id ? memberTwo : memberOne;
 
   return (
-    <div className='bg-white dark:bg-[#313338] flex flex-col h-full'>
+    <div className='bg-white dark:bg-[#313338] flex flex-col h-screen'>
       <ChatHeader
         imageUrl={otherMember?.profile?.imageUrl}
         name={otherMember.profile.name}
         serverId={id}
         type='conversation'
+      />
+
+      <ChatMessage
+        member={currMember}
+        name={otherMember.profile.name}
+        chatId={conversation?.id}
+        type='conversation'
+        apiUrl='direct-messages'
+        socketUrl='/api/socket/direct-messages'
+        socketQuery={{
+          conversationId: conversation?.id,
+        }}
+        paramKey='conversationId'
+        paramValue={conversation.id}
+      />
+
+      <ChatInput
+        name={otherMember.profile.name}
+        type='conversation'
+        apiUrl='/socket/direct-messages'
+        query={{
+          conversationId: conversation.id,
+        }}
       />
     </div>
   );

@@ -11,7 +11,9 @@ export type ModalType =
   | 'leaveServer'
   | 'deleteServer'
   | 'editChannel'
-  | 'deleteChannel';
+  | 'deleteChannel'
+  | 'messageFile'
+  | 'deleteMessage';
 
 export interface ModalStore {
   type: ModalType | null;
@@ -19,6 +21,15 @@ export interface ModalStore {
   channel?: ChannelType | null;
   channelData?: Channel | {};
   data?: Server | {};
+  apiUrl?: string;
+  query?:
+    | {
+        serverId: string;
+        channelId: string;
+        content: string;
+        url: string;
+      }
+    | any;
 }
 
 const initialState: ModalStore = {
@@ -27,6 +38,8 @@ const initialState: ModalStore = {
   channel: null,
   channelData: {},
   isOpen: false,
+  query: {},
+  apiUrl: '',
 };
 
 const modal: any = createSlice({
@@ -39,6 +52,8 @@ const modal: any = createSlice({
         type: ModalType;
         channel?: ChannelType;
         channelData?: Channel;
+        query: any;
+        apiUrl: string;
         data: Server;
       }>
     ) => {
@@ -46,6 +61,8 @@ const modal: any = createSlice({
       state.type = action.payload.type;
       state.channel = action.payload.channel;
       state.channelData = action.payload.channelData;
+      state.query = action.payload.query;
+      state.apiUrl = action.payload.apiUrl;
       state.data = action.payload.data;
     },
     onClose: (state) => {

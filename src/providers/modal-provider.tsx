@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react';
 import MemberModal from '@/components/modals/member-modal';
 import ChannelModal from '@/components/modals/channel-modal';
 import LeaveAndDeleteServerModal from '@/components/modals/leave-and-delete-server-modal';
-import InitialModal from '@/components/modals/initial-modal';
 import DeleteChannelModal from '@/components/modals/delete-channel-modal';
+import MessageModal from '@/components/modals/message-modal';
+import DeleteMessageModal from '@/components/modals/delete-message-modal';
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -25,6 +26,8 @@ const ModalProvider = () => {
       <ChannelModal />
       <LeaveAndDeleteServerModal />
       <DeleteChannelModal />
+      <MessageModal />
+      <DeleteMessageModal />
       {/* <InitialModal
         title='Custom your server'
         open

@@ -4,13 +4,15 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 
 import { api } from './api';
 import auth from './features/Auth';
-import modal, { ModalStore } from './features/Modal';
+import modal from './features/Modal';
+import socket from './features/Socket';
 
 export const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice
     AuthFeature: auth,
     ModalFeature: modal,
+    SocketFeature: socket,
     [api.reducerPath]: api.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,

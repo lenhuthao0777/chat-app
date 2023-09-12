@@ -6,6 +6,8 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import ReduxQueryProvider from '@/providers/redux-query-provider';
 import ModalProvider from '@/providers/modal-provider';
 import { cn } from '@/lib/utils';
+import SocketProvider from '@/providers/socket-provider';
+import ReactQueryProvider from '@/providers/react-query-provider';
 
 const font = Open_Sans({ subsets: ['latin'] });
 
@@ -22,9 +24,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en' suppressHydrationWarning>
-        <body
-          className={cn(font.className, 'bg-white dark:bg-[#313338]')}
-        >
+        <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
           <ThemeProvider
             attribute='class'
             defaultTheme='dark'
@@ -32,8 +32,12 @@ export default function RootLayout({
             storageKey='discord-theme'
           >
             <ReduxQueryProvider>
-              <ModalProvider />
-              {children}
+              <SocketProvider>
+                <ReactQueryProvider>
+                  <ModalProvider />
+                  {children}
+                </ReactQueryProvider>
+              </SocketProvider>
             </ReduxQueryProvider>
           </ThemeProvider>
         </body>
